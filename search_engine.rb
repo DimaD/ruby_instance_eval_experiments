@@ -16,10 +16,10 @@ module SearchEngine
 
     def method_missing(method_name, *args, &block)
       # I am not sure who should throw an error in case
-      # there is no method in context.
-      # It maybe confusing to receive error about
+      # there is no method in @context.
+      # It maybe confusing to receive error:
       #   undefined method 'method_name' for <ContextClassName:<id>>
-      # because programmer can make an error in our API
+      # because a programmer can make an error in our API
       @context.__send__(method_name, *args, &block)
     end # method_missing
   end # QueryWithProperIE
@@ -41,7 +41,7 @@ module SearchEngine
   private
   def self.get_caller_object_from_block(blk)
     # Black magick with Ruby internals
-    eval 'self', blk.__send__(:binding)
+    eval 'self', blk
   end # self.get_caller_obbject_from_block
 end # SearchEngine
 
