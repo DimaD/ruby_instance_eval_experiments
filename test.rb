@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require File.join(File.dirname(__FILE__), 'search_engine')
 
 class SearchController
