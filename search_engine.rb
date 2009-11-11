@@ -41,7 +41,7 @@ module SearchEngine
   private
   def self.get_caller_object_from_block(blk)
     # Black magick with Ruby internals
-    eval 'self', blk
+    eval 'self', blk.binding
   end # self.get_caller_obbject_from_block
 end # SearchEngine
 
