@@ -45,17 +45,17 @@ _self_ in the block will be an _@object_ itself.
 Back to our sunspot problem. _params_ in Rails is actually a method on ActiveController::Base
 so instance_eval on Suspot::Query object doesn't have it. The code with the local variable (2nd variant) is working because you have access to all variables deined in its lexical scope.
 
-What to do with this "problem"? The idea was to catch the object in which block was created and pass
+What to do with this "problem"? The idea was to catch the object in which the block was created and pass
 it to Query. Query is implementing _method_missing_ with fallback to the caught object. Everything is working working as expected. But we have 2 new problems.
 
   * How to get the caller object?
-  * What to do if method not found neither in Query nor in caller object?
+  * What to do if the method is not found neither in Query nor in caller object?
 
-I've found the answer to first question inside the ruby [Kernel#eval](http://ruby-doc.org/core/classes/Kernel.html#M005922)
+I've found the answer to the first question inside the ruby [Kernel#eval](http://ruby-doc.org/core/classes/Kernel.html#M005922)
 docs. _Kernel#eval_ accepts the special object of class [Binding](http://ruby-doc.org/core/classes/Binding.html) which incapsulates the
-execution context at some place in the code (sounds like a continuation? yep) or objects of class _Proc_. (In Ruby 1.9 API have changed and _Kernel#eval_ accepts only objects of class Binding).
+execution context at some place in the code (sounds like a continuation? yep) or objects of class _Proc_. (In Ruby 1.9 API has changed and _Kernel#eval_ accepts only objects of class Binding).
 
-Actualy blocks are the objects of class _Proc_ (lambdas are Procs too). But I recomend to pass binding to keep compatibility with new shiny Ruby 1.9. Luckily for us there is a method  _Proc#binding_ which does the thing you expect. How to get required object from _Proc_ and _eval_? Really simple:
+Actualy blocks are the objects of class _Proc_ (lambdas are Procs too). But I recommend to pass binding to keep compatibility with Ruby 1.9. Luckily for us there is a method  _Proc#binding_ which does the thing you expect. How to get required object from _Proc_ and _eval_? Really simple:
 
     eval 'self', block
 
