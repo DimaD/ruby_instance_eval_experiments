@@ -46,7 +46,7 @@ Back to our sunspot problem. _params_ in Rails is actually a method on ActiveCon
 so instance_eval on Suspot::Query object doesn't have it. The code with the local variable (2nd variant) is working because you have access to all variables deined in its lexical scope.
 
 What to do with this "problem"? The idea was to catch the object in which block was created and pass
-it to Query. Query is implementing _method_missing_ with fallback to the caught object. Everything works as expected. But we have 2 new problems.
+it to Query. Query is implementing _method_missing_ with fallback to the caught object. Everything is working working as expected. But we have 2 new problems.
 
   * How to get the caller object?
   * What to do if method not found neither in Query nor in caller object?
