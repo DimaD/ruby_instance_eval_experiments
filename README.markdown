@@ -1,4 +1,4 @@
-WTF is this?
+What is this?
 =============
 
 Showing [Sunspot library](http://github.com/outoftime/sunspot) to different people I have noticed their confusion about Sunspot search API.
